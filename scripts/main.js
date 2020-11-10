@@ -1,36 +1,50 @@
-// Global Variables
+// Variables Globales
+
 var x = 0;
 var canvas = document.getElementById(`Basket`);
-var ball = new Ball(200, 150, 15);
+var ball = new Ball(200, 10, 15);
 var bounds = canvas.getBoundingClientRect();
-
+var ctx = document.getElementById(`Basket`).getContext(`2d`);
 
 /*
  * Evento con el mouse
  */
 
-// canvas.onmousemove = (e) => {
-//     window.requestAnimationFrame(mouse);
-// }
+var arrastrando = false;
+function click(e) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.beginPath();
+    ball.x = e.clientX - bounds.left;
+    ball.y = e.clientY - bounds.top;
+    arrastrando = true;
+    ball.show();
+}
 
-// function mouse(e) {
-//     ctx.clearRect(0, 0, canvas.width, canvas.height);
-//     ctx.beginPath();
-//     console.log(`X: ${e.clientX} Y:${e.clientY} Canvas: ${canvas.getBoundingClientRect().y}`);
-//     ball.x = e.clientX - bounds.left;
-//     ball.y = e.clientY - bounds.top;
-//     ball.aceleracion(e.clientX - bounds.left, e.clientY - bounds.top);
-//     ball.show();
-// }
+function arrastrar(e) {
+    if (arrastrando) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.beginPath();
+        console.log(`X: ${e.clientX} Y:${e.clientY} VX: ${ball.vx} VY: ${ball.vy}`);
+        ball.x = e.clientX - bounds.left;
+        ball.y = e.clientY - bounds.top;
+        ball.aplicarVelocidad();
+        ball.show();
+    }
+}
 
-/*
- * Pruebas con un segundo balon
- */
+function levantar(e) {
+    arrastrando = false;
+    canvas.removeEventListener(`mousedown`, click);
+    canvas.removeEventListener(`mousemove`, arrastrar);
+    canvas.removeEventListener(`mouseup`, levantar);
+    window.requestAnimationFrame(draw);
+}
 
-// var ball2 = new Ball(30, 50, 15);
+canvas.addEventListener(`mousedown`, click);
+canvas.addEventListener(`mousemove`, arrastrar);
+canvas.addEventListener(`mouseup`, levantar);
 
-window.requestAnimationFrame(draw);
-var ctx = document.getElementById(`Basket`).getContext(`2d`);
+// window.requestAnimationFrame(draw);
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.beginPath();
@@ -42,11 +56,6 @@ function draw() {
     ball.bordes();
     ctx.restore();
     console.log(`BallX: ${Math.round(ball.x)} BallY: ${Math.round(ball.y)} BallVX: ${ball.vx.toFixed(2)} BallVY: ${ball.vy.toFixed(2)}`);
-    
-    // Ball 2
-    // ctx.save();
-    // ball2.show();
-    // ball2.actualizar();
-    // ctx.restore();
+
     window.requestAnimationFrame(draw);
 }
