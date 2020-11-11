@@ -26,8 +26,8 @@ class Ball {
     }
 
     aplicarVelocidad() {
-        this.vx = this.x - this.x0;
-        this.vy = this.y - this.y0;
+        this.vx = (this.x - this.x0) * 0.2;
+        this.vy = (this.y - this.y0) * 0.2;
 
         this.x0 = this.x;
         this.y0 = this.y;
