@@ -3,12 +3,23 @@ class Escenario {
     // Metodos
 
     cargarEscenario() {
+
         this.fondo();
         this.edificios();
         this.arbustos();
         this.cancha();
         this.canasta();
+        this.puntuacion();
         //balon();
+    }
+
+    puntuacion(){
+        ctx.font = `30px Poppins`;
+        ctx.beginPath();
+        ctx.strokeStyle = `blue`;
+        ctx.lineWidth = `2px`;
+        ctx.fillText(`Puntuacion: ${i}`, canvas.width/2 - 100, 40);
+        ctx.closePath();
     }
 
     fondo() {
@@ -86,8 +97,8 @@ class Escenario {
         ctx.strokeStyle = "white";
         ctx.lineWidth = 5;
         ctx.beginPath();
-        ctx.moveTo((ctx.canvas.width / 2) - 100, (ctx.canvas.height / 2) + 140);
-        ctx.lineTo((ctx.canvas.width / 2) - 100, (ctx.canvas.height / 2) + 160);
+        ctx.moveTo(ctx.canvas.width / 2, (ctx.canvas.height / 2) + 140);
+        ctx.lineTo(ctx.canvas.width / 2, (ctx.canvas.height / 2) + 160);
         ctx.closePath();
         ctx.stroke();
 
@@ -104,6 +115,7 @@ class Escenario {
         ctx.lineWidth = 10;
         ctx.lineCap = "round";
 
+        // Conexion Poste-Tablero
         ctx.beginPath();
         ctx.moveTo((ctx.canvas.width / 2) + 538, (ctx.canvas.height / 2) - 118); //1085, 135
         ctx.lineTo((ctx.canvas.width / 2) + 503, (ctx.canvas.height / 2) - 183); //1050, 70
@@ -113,6 +125,7 @@ class Escenario {
         ctx.strokeStyle = "#DCDCDC";
         ctx.lineWidth = 2;
 
+        // Poste
         ctx.fillRect((ctx.canvas.width / 2) + 528, (ctx.canvas.height / 2) - 113, 20, 227); //1075, 140, 20, 227
         ctx.strokeRect((ctx.canvas.width / 2) + 528, (ctx.canvas.height / 2) - 113, 20, 227); //1075, 140, 20, 227
 
@@ -122,6 +135,7 @@ class Escenario {
         ctx.fillRect((ctx.canvas.width / 2) + 483, (ctx.canvas.height / 2) - 248, 15, 135);
         ctx.strokeRect((ctx.canvas.width / 2) + 483, (ctx.canvas.height / 2) - 248, 15, 135);
 
+        // Canasta
         ctx.strokeStyle = "white";
         ctx.lineWidth = 4;
         ctx.beginPath();

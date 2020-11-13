@@ -5,8 +5,11 @@ var bounds = canvas.getBoundingClientRect();
 var escenario = new Escenario();
 var ctx = canvas.getContext(`2d`);
 var i = 0;
-var puntos = 0;
-var balones = [];
+var frame = 0;
+var balon;
+var hit = new Audio(`./resources/bounce.wav`);
+var soundEnces = new Audio(`./resources/encesta.wav`);
+var fail = new Audio(`./resources/fail.wav`);
 
 canvas.width = 1200;
 canvas.height = 550;
@@ -19,101 +22,134 @@ canvas.addEventListener(`mouseleave`, levantar);
 escenario.cargarEscenario();
 
 /*
- * Evento con el mouse
+ * Evento con el mouse, 3 funciones para simular que se esta arrastrando
+ * una pelota
  */
 
 var arrastrando = false;
 var encesta = false;
 var tocaSuelo = false;
+var fallo = false;
+
+// Funcion al clickear
 
 function click(e) {
     encesta = false;
-    balones.push(new Ball(20));
+    fallo = false;
+    balon = new Ball(20);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.beginPath();
-    balones[i].x = e.clientX - bounds.left;
-    balones[i].y = e.clientY - bounds.top;
+    balon.x = e.clientX - bounds.left;
+    balon.y = e.clientY - bounds.top;
     arrastrando = true;
-    balones[i].show();
+    balon.show();
 }
+
+// Funcion al arrastrar
 
 function arrastrar(e) {
     if (arrastrando) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.beginPath();
 
-        balones[i].x = e.clientX - bounds.left;
-        balones[i].y = e.clientY - bounds.top;
+        balon.x = e.clientX - bounds.left;
+        balon.y = e.clientY - bounds.top;
 
         escenario.cargarEscenario();
 
-        ctx.moveTo(balones[i].x, balones[i].y);
-        ctx.lineTo(balones[i].x + balones[i].vx * 3, balones[i].y + balones[i].vy * 3);
+        ctx.moveTo(balon.x, balon.y);
+        ctx.lineTo(balon.x + balon.vx * 3, balon.y + balon.vy * 3);
         ctx.stroke();
-        balones[i].aplicarVelocidad();
+        balon.aplicarVelocidad();
+        balon.verificarArea(areaProhibida);
 
-        balones[i].show();
+        balon.show();
     }
 }
 
+// Funcion al levantar
+
 function levantar() {
-    if (arrastrando == true) {
-        arrastrando = false;
+    if (arrastrando) {
         canvas.removeEventListener(`mousedown`, click);
         canvas.removeEventListener(`mousemove`, arrastrar);
         canvas.removeEventListener(`mouseup`, levantar);
         canvas.removeEventListener(`mouseleave`, levantar);
+        arrastrando = false;
         window.requestAnimationFrame(draw);
     }
 
 }
 
 var tablero = new Estructura((ctx.canvas.width / 2) + 483, (ctx.canvas.height / 2) - 248, 15, 135);
-var aro = new Estructura((canvas.width / 2) + 413, (canvas.height / 2) - 145, 68, 1);
+var tabTop = new Estructura((ctx.canvas.width / 2) + 483, (ctx.canvas.height / 2) - 248, 15, 0);
+var tabBot = new Estructura((ctx.canvas.width / 2) + 483, (ctx.canvas.height / 2) - 113, 15, 0);
+var aro = new Estructura((canvas.width / 2) + 420, (canvas.height / 2) - 145, 50, 1);
+var areaProhibida = new Estructura((canvas.width / 2), 0, canvas.width, canvas.height);
 
-
+// Animacion
 function draw() {
-
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.beginPath();
-
+    frame++;
     ctx.save();
-    console.log(`VX: ${Math.round(balones[i].vx)}  VY: ${Math.round(balones[i].vy)}`);
-    balones[i].show();
-    balones[i].actualizar();
+    balon.show();
+    balon.actualizar();
     verificacionEstructuras();
+    console.error();
     ctx.restore();
 
-    if (encesta === false) {
+
+
+    if (!encesta) {
+
+        // Tiempo para que se reestablesca la pelota si el usuario no ha encestado
+        if (frame == 150) {
+            frame = 0;
+            i = 0;
+            escenario.cargarEscenario();
+            fallo = true;
+            encesta = true;
+            fail.play();
+        }
         window.requestAnimationFrame(draw);
     } else {
         escenario.cargarEscenario();
-        ctx.font = `30px monospace`;
-        ctx.beginPath();
-        ctx.strokeStyle = `blue`;
-        ctx.lineWidth = `2px`;
-        ctx.fillText(`Puntuacion: ${i}`, canvas.width/2, 40);
-        ctx.stroke();
-        ctx.closePath();
+        if (fallo) {
+            falloText();
+        }
         canvas.addEventListener(`mousedown`, click);
         canvas.addEventListener(`mousemove`, arrastrar);
         canvas.addEventListener(`mouseup`, levantar);
         canvas.addEventListener(`mouseleave`, levantar);
+        window.cancelAnimationFrame(draw);
     }
 }
 
 function aumentarPuntaje(dAro) {
-    if (balones[i].x + balones[i].rad >= dAro.x && balones[i].x - balones[i].rad <= dAro.x + dAro.width && balones[i].y >= dAro.y && (balones[i].y - balones[i].rad) <= (dAro.y + dAro.height)) {
-        if (encesta === false) {
-            if (balones[i].vy > 0) {
-                console.log(++i);
-                encesta = true;
-            }
+    if (balon.x + balon.rad >= dAro.x && balon.x - balon.rad + 5 <= dAro.x + dAro.width && balon.y >= dAro.y && (balon.y - balon.rad + 5) <= (dAro.y + dAro.height)) {
+        if (balon.vy > 2 && !encesta) {
+            frame = 0;
+            i++;
+            encesta = true;
+            soundEnces.play();
         }
     }
 }
+
+function falloText() {
+    ctx.font = `30px Poppins`;
+    ctx.beginPath();
+    ctx.strokeStyle = `blue`;
+    ctx.lineWidth = `2px`;
+    ctx.fillText(`Haz Fallado. Intente de Nuevo`, canvas.width / 2 - 230, 70);
+    ctx.closePath();
+}
+
 function verificacionEstructuras() {
-    balones[i].verificarEstruc(tablero);
-    balones[i].bordes(encesta);
+    balon.verificarEstrucX(tablero);
+    balon.verificarEstrucY(tabTop);
+    balon.verificarEstrucY(tabBot);
+    balon.bordes(encesta);
     aumentarPuntaje(aro);
 }

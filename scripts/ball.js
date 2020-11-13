@@ -52,13 +52,22 @@ class Ball {
         this.vy += this.ay;
     }
 
-    verificarEstruc(estruct) {
+    verificarEstrucX(estruct) {
         if (this.x + this.rad >= estruct.x && this.x - this.rad <= estruct.x + estruct.width && this.y + this.rad >= estruct.y && this.y - this.rad <= estruct.y + estruct.height) {
             this.vx *= -1;
         }
     }
-
-    bordes(encesta) {
+    verificarEstrucY(estruct) {
+        if (this.x + this.rad >= estruct.x && this.x - this.rad <= estruct.x + estruct.width && this.y + this.rad >= estruct.y && this.y - this.rad <= estruct.y + estruct.height) {
+            this.vy *= -1;
+        }
+    }
+    verificarArea(estruct) {
+        if (this.x + this.rad >= estruct.x && this.x - this.rad <= estruct.x + estruct.width && this.y + this.rad >= estruct.y && this.y - this.rad <= estruct.y + estruct.height) {
+            levantar();
+        }
+    }
+    bordes() {
         if (this.x >= canvas.width - this.rad) {
             this.x = canvas.width - this.rad;
             this.vx *= -1;
@@ -72,15 +81,8 @@ class Ball {
         if (this.y >= (canvas.height / 2) + 140 - this.rad) {
             this.vx *= 0.9;
             this.vy *= -1;
-            this.y = (ctx.canvas.height / 2) + 145 - this.rad;       
-            if (encesta === true) {
-                canvas.addEventListener(`mousedown`, click);
-                canvas.addEventListener(`mousemove`, arrastrar);
-                canvas.addEventListener(`mouseup`, levantar);
-                canvas.addEventListener(`mouseleave`, levantar);
-                window.cancelAnimationFrame(draw);
-                console.log("Hola");
-            }
+            this.y = (ctx.canvas.height / 2) + 145 - this.rad;  
+            hit.play();
         }
     }
 

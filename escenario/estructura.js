@@ -6,9 +6,9 @@ class Estructura {
 		this.height = height;
 	}
 
-	crearEstructura() {
+	crearEstructura(color) {
 		ctx.lineWidth = 5;
-		ctx.strokeStyle = "red";
+		ctx.strokeStyle = color;
 		ctx.strokeRect(this.x, this.y, this.width, this.height);
 	}
 }
