@@ -12,8 +12,8 @@ class Ball {
         this.vx = 0;
         this.vy = 0;
 
-        this.ax = 0.97;
-        this.ay = 1.5;
+        this.ax = .995;
+        this.ay = .8;
     }
 
     show() {
@@ -23,10 +23,12 @@ class Ball {
         ctx.fillStyle = `red`;
         ctx.strokeStyle = `black`;
 
+        ctx.beginPath();
         ctx.moveTo(this.x + this.rad, this.y);
         ctx.arc(this.x, this.y, this.rad, 0, 2 * Math.PI);
+        ctx.stroke();
         ctx.fill();
-
+        ctx.closePath();
 
     }
 
@@ -50,14 +52,13 @@ class Ball {
         this.vy += this.ay;
     }
 
-    verificarEstruc(a) {
-        if (this.x + this.rad >= a.x && this.x - this.rad <= a.x + a.width && this.y + this.rad >= a.y && this.y - this.rad <= a.y + a.height) {
-            console.log("Misma loc en x");
+    verificarEstruc(estruct) {
+        if (this.x + this.rad >= estruct.x && this.x - this.rad <= estruct.x + estruct.width && this.y + this.rad >= estruct.y && this.y - this.rad <= estruct.y + estruct.height) {
             this.vx *= -1;
         }
     }
 
-    bordes() {
+    bordes(encesta) {
         if (this.x >= canvas.width - this.rad) {
             this.x = canvas.width - this.rad;
             this.vx *= -1;
@@ -71,7 +72,15 @@ class Ball {
         if (this.y >= (canvas.height / 2) + 140 - this.rad) {
             this.vx *= 0.9;
             this.vy *= -1;
-            this.y = (ctx.canvas.height / 2) + 145 - this.rad;
+            this.y = (ctx.canvas.height / 2) + 145 - this.rad;       
+            if (encesta === true) {
+                canvas.addEventListener(`mousedown`, click);
+                canvas.addEventListener(`mousemove`, arrastrar);
+                canvas.addEventListener(`mouseup`, levantar);
+                canvas.addEventListener(`mouseleave`, levantar);
+                window.cancelAnimationFrame(draw);
+                console.log("Hola");
+            }
         }
     }
 

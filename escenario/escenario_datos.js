@@ -58,7 +58,6 @@ class Escenario {
             x2 += 125;
         }
 
-        // ctx.fillRect(0, (ctx.canvas.height/2) + 77, ctx.canvas.width, (ctx.canvas.height/2) - 191);
         ctx.fillRect(0, (ctx.canvas.height / 2) + 77, ctx.canvas.width, 150);
 
         ctx.fillStyle = "#32CD32";
@@ -73,7 +72,6 @@ class Escenario {
             x1 += 100;
         }
 
-        //ctx.fillRect(0, (ctx.canvas.height/2) + 87, ctx.canvas.width, (ctx.canvas.height/2) - 201);
         ctx.fillRect(0, (ctx.canvas.height / 2) + 87, ctx.canvas.width, 100);
 
     }
@@ -208,5 +206,3 @@ function balon() {
         (ctx.canvas.height / 2) + 18, (ctx.canvas.width / 2) - 383, (ctx.canvas.height / 2) + 38);
     ctx.stroke();
 }
-
-// window.addEventListener("load", comenzar, false);
