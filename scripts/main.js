@@ -72,6 +72,6 @@ function draw() {
     window.requestAnimationFrame(draw);
 }
 
-function ubicacionAleatoria(min, max) { // min and max included 
+function ubicacionAleatoria(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
