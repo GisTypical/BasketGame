@@ -57,16 +57,19 @@ class Ball {
             this.vx *= -1;
         }
     }
+
     verificarEstrucY(estruct) {
         if (this.x + this.rad >= estruct.x && this.x - this.rad <= estruct.x + estruct.width && this.y + this.rad >= estruct.y && this.y - this.rad <= estruct.y + estruct.height) {
             this.vy *= -1;
         }
     }
+
     verificarArea(estruct) {
         if (this.x + this.rad >= estruct.x && this.x - this.rad <= estruct.x + estruct.width && this.y + this.rad >= estruct.y && this.y - this.rad <= estruct.y + estruct.height) {
             levantar();
         }
     }
+
     bordes() {
         if (this.x >= canvas.width - this.rad) {
             this.x = canvas.width - this.rad;
@@ -81,8 +84,8 @@ class Ball {
         if (this.y >= (canvas.height / 2) + 140 - this.rad) {
             this.vx *= 0.9;
             this.vy *= -1;
-            this.y = (ctx.canvas.height / 2) + 145 - this.rad;  
-            hit.play();
+            this.y = (canvas.height / 2) + 145 - this.rad;
+            bounce.play();
         }
     }
 

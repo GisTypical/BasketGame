@@ -7,7 +7,7 @@ var ctx = canvas.getContext(`2d`);
 var i = 0;
 var frame = 0;
 var balon;
-var hit = new Audio(`./resources/bounce.wav`);
+var bounce = new Audio(`./resources/bounce.wav`);
 var soundEnces = new Audio(`./resources/encesta.wav`);
 var fail = new Audio(`./resources/fail.wav`);
 
@@ -84,7 +84,7 @@ function levantar() {
 var tablero = new Estructura((ctx.canvas.width / 2) + 483, (ctx.canvas.height / 2) - 248, 15, 135);
 var tabTop = new Estructura((ctx.canvas.width / 2) + 483, (ctx.canvas.height / 2) - 248, 15, 0);
 var tabBot = new Estructura((ctx.canvas.width / 2) + 483, (ctx.canvas.height / 2) - 113, 15, 0);
-var aro = new Estructura((canvas.width / 2) + 420, (canvas.height / 2) - 145, 50, 1);
+var aro = new Estructura((canvas.width / 2) + 419, (canvas.height / 2) - 145, 60, 1);
 var areaProhibida = new Estructura((canvas.width / 2), 0, canvas.width, canvas.height);
 
 // Animacion
