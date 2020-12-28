@@ -1,2 +1,2 @@
 # BasketGame
-Videojuego realizado para un proyecto de la _Universidad Rafael Urdaneta_.
+Web based videogame for a college proyect.
