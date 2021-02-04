@@ -98,13 +98,10 @@ function draw() {
     verificacionEstructuras();
     console.error();
     ctx.restore();
-
-
-
     if (!encesta) {
 
         // Tiempo para que se reestablesca la pelota si el usuario no ha encestado
-        if (frame == 150) {
+        if (frame == 100) {
             frame = 0;
             i = 0;
             escenario.cargarEscenario();
