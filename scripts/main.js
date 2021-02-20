@@ -133,8 +133,8 @@ function failFunc() {
     ctx.strokeStyle = `#ff4f23`;
     ctx.fillStyle = `#ff8686`;
     ctx.textAlign = "center";
-    ctx.strokeText(`Haz Fallado. Intente de Nuevo`, canvas.width / 2, 75);
-    ctx.fillText(`Haz Fallado. Intente de Nuevo`, canvas.width / 2, 75);
+    ctx.strokeText(`You've failed, try again!`, canvas.width / 2, 75);
+    ctx.fillText(`You've failed, try again!`, canvas.width / 2, 75);
     ctx.closePath();
 }
 
