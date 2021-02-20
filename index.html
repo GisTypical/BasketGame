@@ -1,12 +1,12 @@
-<!--Realizado por Nathalie Zambrano y Gerardo Torres-->
+<!--Made by Nathalie Zambrano and Gerardo Torres-->
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="./scripts/ball.js"></script>
-    <script src="./escenario/escenario_datos.js"></script>
-    <script src="./escenario/estructura.js"></script>
+    <script src="./escenario/fieldElements.js"></script>
+    <script src="./escenario/structure.js"></script>
     <link rel="stylesheet" href="styles.css" />
     <link
       rel="shortcut icon"
@@ -20,15 +20,13 @@
     />
     <title>BasketGame</title>
   </head>
-  <body>
-    <div class="padre">
-      <div>
-        <div>
-          <h4>=BasketGame= -----> Trate de Lanzar antes de la línea!</h4>
-        </div>
+  <body onload="loadEvents()">
+    <div class="root">
+      <div class= "center">
+        <h4>~=<em>BasketGame</em>=~ -----> Try to dunk before the line!</h4>
+        <canvas id="Basket"></canvas>
       </div>
     </div>
-    <canvas id="Basket"></canvas>
     <script src="./scripts/main.js"></script>
   </body>
 </html>
