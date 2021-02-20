@@ -9,15 +9,8 @@ var score = 0;
 var record = Number(localStorage.getItem("record"));
 var background = new FieldElements();
 
-let loadEvents = () => {
-    background.showBackground();
-    canvas.addEventListener(`mousedown`, click);
-    canvas.addEventListener(`mousemove`, drag);
-    canvas.addEventListener(`mouseup`, drop);
-    canvas.addEventListener(`mouseleave`, drop);
-}
 
-// Update canvas offsets 
+// Update canvas offsets when resize
 var bounds = canvas.getBoundingClientRect();
 var offsetX, offsetY;
 offsetX = bounds.left;
@@ -33,6 +26,18 @@ window.onresize = function (e) { reOffset(); }
 /**
  * Mouse functions, simulating drag-n-drop
  */
+
+let startGame = () => {
+    background.showBackground();
+    loadEvents();
+}
+
+let loadEvents = () => {
+    canvas.addEventListener(`mousedown`, click);
+    canvas.addEventListener(`mousemove`, drag);
+    canvas.addEventListener(`mouseup`, drop);
+    canvas.addEventListener(`mouseleave`, drop);
+}
 
 var ball, action, dragging;
 function click(e) {

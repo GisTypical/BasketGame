@@ -1,7 +1,6 @@
 class FieldElements {
 
     // Methods
-
     constructor() {
         this.showBackground();
     }
@@ -122,7 +121,7 @@ class FieldElements {
         ctx.strokeStyle = "#A9A9A9";
         ctx.lineWidth = 10;
         ctx.lineCap = "round";
-        // ctx.save();
+        ctx.save();
 
         // Board-pole connection
         ctx.beginPath();
