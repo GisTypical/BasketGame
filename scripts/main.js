@@ -10,6 +10,7 @@ var record = Number(localStorage.getItem("record"));
 var background = new FieldElements();
 
 let loadEvents = () => {
+    background.showBackground();
     canvas.addEventListener(`mousedown`, click);
     canvas.addEventListener(`mousemove`, drag);
     canvas.addEventListener(`mouseup`, drop);

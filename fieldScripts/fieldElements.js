@@ -18,6 +18,7 @@ class FieldElements {
     }
 
     showScore() {
+        ctx.save();
         ctx.beginPath();
         ctx.font = `30px Poppins`;
         ctx.strokeStyle = `orange`;
@@ -26,6 +27,7 @@ class FieldElements {
         ctx.strokeText(`Score: ${score}   Record: ${record}`, canvas.width / 2, 40);
         ctx.fillText(`Score: ${score}   Record: ${record}`, canvas.width / 2, 40);
         ctx.closePath();
+        ctx.restore();
     }
 
     background() {
